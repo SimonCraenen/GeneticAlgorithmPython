@@ -18,4 +18,13 @@ class TournamentSelector(Selector):
 
         selection: List[Tuple[Individual, Individual]] = []
 
+        for _ in range(selection_amount):
+            tournament_one = rand_choices(population, k=self.tournament_size)
+            winner_one = max(tournament_one, key=lambda individual: individual.fitness)
+
+            tournament_two = rand_choices(population, k=self.tournament_size)
+            winner_two = max(tournament_two, key=lambda individual: individual.fitness)
+
+            selection.append((winner_one, winner_two))
+
         return selection

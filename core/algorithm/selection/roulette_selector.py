@@ -18,5 +18,10 @@ class RouletteSelector(Selector):
 
         selection: List[Tuple[Individual, Individual]] = []
 
+        candidates = population
+        weights = [individual.fitness  for individual in candidates]
+        for _ in range(selection_amount):
+            selection.append(tuple(rand_choices(population=candidates, weights=weights, k=2)))
+
         return selection
 

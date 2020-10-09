@@ -15,4 +15,4 @@ class StringEvaluator(Evaluator):
         if len(self.target) != len(gene.string):
             return 0
 
-        return 0
+        return sum([1 if gene.string[i] == self.target[i] else 0 for i in range(len(self.target))]) / len(self.target)

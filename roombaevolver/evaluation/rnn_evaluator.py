@@ -40,6 +40,18 @@ class RNNEvaluator(Evaluator):
         scoring_grid: ndarray = simulator.scoring_grid
 
         score: float = 0.0
-        # score calculation should happen here
+        for j in range(scoring_grid.shape[0]):
+            for i in range(scoring_grid.shape[1]):
+                value = scoring_grid[j, i]
+
+                if value == 0:
+                    continue
+                else:
+                    score += 1.0 / value
+
+        score /= (scoring_grid.shape[0] * scoring_grid.shape[1])
+
+        individual.data["scoring_grid"] = scoring_grid
+        individual.data["score"] = score
 
         return score

@@ -19,7 +19,8 @@ class StringGene(Gene):
 
     def mutate(self, mutation_probability: float):
 	# should adjust self.string 
-
+        pass
+        
     def crossover(self, other: StringGene) -> Tuple[StringGene, StringGene]:
        	# implement this
         return (StringGene("newgene"), StringGene("newgene"))

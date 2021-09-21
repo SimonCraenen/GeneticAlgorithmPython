@@ -4,9 +4,7 @@ from random import choices as rand_choices
 
 from ...models import Individual
 
-from typing import List, Tuple, Dict
-
-from random import uniform
+from typing import List
 
 
 class RouletteSelector(Selector):
@@ -14,5 +12,4 @@ class RouletteSelector(Selector):
         super().__init__()
 
     def select_individual(self, population: List[Individual]) -> Individual:
-        # Look at roulette wheel selection in the slides for inspiration.
-        pass
+        return rand_choices(population=population, weights=[individual.fitness for individual in population])

@@ -18,13 +18,21 @@ class StringGene(Gene):
         self.string = string
 
     def mutate(self, mutation_probability: float):
-	    # implement this
-        # should adjust [self.string]
-        pass
+        should_mutate = rand_choices(population=[True, False], weights=[mutation_probability, 1-mutation_probability], k=len(self.string))
+
+        for i in range(len(self.string)):
+            if not should_mutate[i]:
+                continue
+
+            self.string = self.string[:i] + alphabet[int(randint(len(alphabet)))] + self.string[i + 1:]
         
     def crossover(self, other: StringGene) -> Tuple[StringGene, StringGene]:
-       	# implement this (return two string genes with the appropriate values)
-        return self, other
+        crossover_point = int(len(self.string) / 2)
+
+        child_one = StringGene(self.string[:crossover_point] + other.string[crossover_point:])
+        child_two = StringGene(other.string[:crossover_point] + self.string[crossover_point:])
+        
+        return (child_one, child_two)
 
     def __repr__(self):
         return "[Gene - {string}]".format(string=self.string)

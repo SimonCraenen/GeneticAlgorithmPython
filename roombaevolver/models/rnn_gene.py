@@ -15,10 +15,12 @@ class RNNGene(Gene):
 
     def mutate(self, mutation_probability: float):
         # mutation should happen here
+        # the same mutation code can be used for both the input_weights and recurrent_weights
         pass
 
     def crossover(self, other: RNNGene) -> Tuple[RNNGene, RNNGene]:
         # crossover should happen here
+        # the same crossover code can be used for both the input_weights and recurrent_weights
         return self, other
 
     def __repr__(self):
@@ -32,7 +34,7 @@ class RNNGene(Gene):
         if inputs <= 0 or outputs <= 0:
             pass # TODO raise exception
 
-        # the +1 at inputs is the account for the bias node
+        # the +1 at inputs is to account for the bias node
         input_weights: ndarray = uniform(low=-1, high=1, size=(inputs + 1, outputs))
         recurrent_weights: ndarray = uniform(low=-1, high=1, size=(outputs, outputs))
 

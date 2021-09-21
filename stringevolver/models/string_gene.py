@@ -18,12 +18,13 @@ class StringGene(Gene):
         self.string = string
 
     def mutate(self, mutation_probability: float):
-	# should adjust self.string 
+	    # implement this
+        # should adjust [self.string]
         pass
         
     def crossover(self, other: StringGene) -> Tuple[StringGene, StringGene]:
-       	# implement this
-        return (StringGene("newgene"), StringGene("newgene"))
+       	# implement this (return two string genes with the appropriate values)
+        return self, other
 
     def __repr__(self):
         return "[Gene - {string}]".format(string=self.string)

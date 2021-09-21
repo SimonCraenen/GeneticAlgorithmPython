@@ -5,8 +5,6 @@ from ..models import RNNGene, Vehicle, Environment
 from ..network import RNN
 from ..evaluation.simulation import Simulator
 
-from math import pi
-
 from numpy import ndarray
 
 from typing import Tuple
@@ -39,7 +37,9 @@ class RNNEvaluator(Evaluator):
 
         scoring_grid: ndarray = simulator.scoring_grid
 
-        score: float = 0.0
-        # score calculation should happen here
+        fitness: float = 0.0
+        
+        # implement fitness calculation here
+        # scoring_grid contains how often each cell in the grid was driven over by the vehicle
 
-        return score
+        return fitness

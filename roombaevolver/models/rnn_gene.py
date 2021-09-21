@@ -14,14 +14,53 @@ class RNNGene(Gene):
         self.recurrent_weights: ndarray = recurrent_weights
 
     def mutate(self, mutation_probability: float):
-        # mutation should happen here
-        # the same mutation code can be used for both the input_weights and recurrent_weights
-        pass
+        input_weights_shape = self.input_weights.shape
+        recurrent_weights_shape = self.recurrent_weights.shape
+
+        for j in range(input_weights_shape[0]):
+            for i in range(input_weights_shape[1]):
+                if uniform() < mutation_probability:
+                    self.input_weights[j, i] = uniform(low=-1, high=1)
+
+        for j in range(recurrent_weights_shape[0]):
+            for i in range(recurrent_weights_shape[1]):
+                if uniform() < mutation_probability:
+                    self.recurrent_weights[j, i] = uniform(low=-1, high=1)
 
     def crossover(self, other: RNNGene) -> Tuple[RNNGene, RNNGene]:
-        # crossover should happen here
-        # the same crossover code can be used for both the input_weights and recurrent_weights
-        return self, other
+        input_weights_shape = self.input_weights.shape
+
+        child_one_input_weights = zeros(shape=input_weights_shape)
+        child_two_input_weights = zeros(shape=input_weights_shape)
+
+        for j in range(input_weights_shape[0]):
+            for i in range(input_weights_shape[1]):
+                idx = i + j * input_weights_shape[1]
+
+                if idx % 2 == 0:
+                    child_one_input_weights[j, i] = self.input_weights[j, i]
+                    child_two_input_weights[j, i] = other.input_weights[j, i]
+                else:
+                    child_one_input_weights[j, i] = other.input_weights[j, i]
+                    child_two_input_weights[j, i] = self.input_weights[j, i]
+
+        recurrent_weights_shape = self.recurrent_weights.shape
+
+        child_one_recurrent_weights = zeros(shape=recurrent_weights_shape)
+        child_two_recurrent_weights = zeros(shape=recurrent_weights_shape)
+
+        for j in range(recurrent_weights_shape[0]):
+            for i in range(recurrent_weights_shape[1]):
+                idx = i + j * recurrent_weights_shape[1]
+
+                if idx % 2 == 0:
+                    child_one_recurrent_weights[j, i] = self.recurrent_weights[j, i]
+                    child_two_recurrent_weights[j, i] = other.recurrent_weights[j, i]
+                else:
+                    child_one_recurrent_weights[j, i] = other.recurrent_weights[j, i]
+                    child_two_recurrent_weights[j, i] = self.recurrent_weights[j, i]
+
+        return (RNNGene(child_one_input_weights, child_one_recurrent_weights), RNNGene(child_two_input_weights, child_two_recurrent_weights)) 
 
     def __repr__(self):
         return "[Gene - input_weights:\n{inputs}, \nrecurrent_weights: \n{recurrent}]".format(inputs=self.input_weights, recurrent=self.recurrent_weights)

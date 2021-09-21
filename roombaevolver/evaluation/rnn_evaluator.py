@@ -39,7 +39,18 @@ class RNNEvaluator(Evaluator):
 
         fitness: float = 0.0
         
-        # implement fitness calculation here
-        # scoring_grid contains how often each cell in the grid was driven over by the vehicle
+        for j in range(scoring_grid.shape[0]):
+            for i in range(scoring_grid.shape[1]):
+                value = scoring_grid[j, i]
+
+                if value == 0:
+                    continue
+                else:
+                    fitness += 1.0 / value
+
+        fitness /= (scoring_grid.shape[0] * scoring_grid.shape[1])
+
+        individual.data["scoring_grid"] = scoring_grid
+        individual.data["score"] = fitness
 
         return fitness

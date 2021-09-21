@@ -9,7 +9,7 @@ class StringEvaluator(Evaluator):
 
         self.target = target
 
-    def evaluate(self, individual: Individual) -> int:
+    def evaluate(self, individual: Individual) -> float:
         gene: StringGene = individual.gene
 
         # safety check, should never happen

@@ -17,9 +17,12 @@ from os.path import join as path_join
 from os.path import exists as path_exists
 from os import makedirs as make_paths
 
+output_dir = "results/"
+if not path_exists(output_dir):
+    make_paths(output_dir)
 
 class GeneticAlgorithm:
-    def __init__(self, gene_type: Type[Gene], evaluator: Evaluator, selector: Selector, population_size: int, mutation_probability: float, elitism_percentage: float=.05, population: List[Individual] = None, process_pool = None, **kwargs):
+    def __init__(self, gene_type: Type[Gene], evaluator: Evaluator, selector: Selector, population_size: int, mutation_probability: float, elitism_percentage: float=.05, population: List[Individual] = None, generation: int = 1, process_pool = None, **kwargs):
         self.process_pool = process_pool
 
         self.gene_type: Type[Gene] = gene_type
@@ -35,28 +38,26 @@ class GeneticAlgorithm:
         if self.population is None:
             self.population = [Individual.initialise(self.gene_type, **kwargs) for _ in range(self.population_size)]
 
-        self.generation = 1
-
-        self.output_dir = "results/"
-        if not path_exists(self.output_dir):
-            make_paths(self.output_dir)
+        self.generation = generation
 
     def start(self):
         """Start/Continue the Genetic Algorithm"""
 
         print("generation {}".format(self.generation), self.population[0].gene, self.population[0].fitness)
 
-        generation_start_time: float = time()
-
         for _ in range(1000):
+            generation_start_time = time()
+
             best_individual = self.__iterate()
 
             generation_end_time = time()
-            pickle_dump(best_individual, open(path_join(self.output_dir, "best-generation-{}.p".format(self.generation)), "wb"))
-            self.generation += 1
-            print("generation {}, {}ms".format(self.generation, round(generation_end_time - generation_start_time, 3) * 1000), best_individual.gene, best_individual.fitness)
-            generation_start_time = generation_end_time
             
+            pickle_dump(best_individual, open(path_join(output_dir, "best-generation-{}.p".format(self.generation)), "wb"))
+
+            print("generation {}, {}ms".format(self.generation, round(generation_end_time - generation_start_time, 3) * 1000), best_individual.gene, best_individual.fitness)
+
+            self.generation += 1
+
             if 0.99 < best_individual.fitness:
                 break 
 
@@ -100,16 +101,14 @@ class GeneticAlgorithm:
         Arguments:
         path -- path to the state file (pkl)
         """
-        # pickle_dump(self.population, open(path_join(self.output_dir, "population-generation-{}".format(self.generation)), "wb"))
-        pass
+        pickle_dump(self, open(path_join(output_dir, "population-generation-{}".format(self.generation)), "wb"))
 
 
     @staticmethod
-    def load_state(self, path: str) -> GeneticAlgorithm:
+    def load_state(path: str) -> List[Individual]:
         """Load a Genetic Algorithm state from file
 
         Arguments:
         path -- path to the state file (pkl)
         """
-        # self.population = pickle_dump(self.population, open(path_join(self.output_dir, "population-generation-{}".format(self.generation)), "wb"))
-        pass
+        return pickle_load(open(path), "rb")

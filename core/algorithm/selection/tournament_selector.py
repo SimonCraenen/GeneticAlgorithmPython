@@ -12,10 +12,8 @@ class TournamentSelector(Selector):
         super().__init__()
         
         self.tournament_size: int = tournament_size
-
-    def make_selection(self, population: List[Individual], selection_amount: int = -1) -> List[Tuple[Individual, Individual]]:
-        selection_amount = selection_amount if selection_amount > 0 else int(len(population) / 2)
-
-        selection: List[Tuple[Individual, Individual]] = []
-
-        return selection
+        
+    def select_individual(self, population: List[Individual]) -> Individual:
+        # Look at Tournament selection in the slides for inspiration.    
+        pass
+        

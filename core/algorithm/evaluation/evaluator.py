@@ -8,7 +8,7 @@ from multiprocessing import Pool
 
 class Evaluator:
     @abstractmethod
-    def evaluate(self, individual: Individual) -> int:
+    def evaluate(self, individual: Individual) -> float:
         """Evaluate an individual
 
         Arguments:

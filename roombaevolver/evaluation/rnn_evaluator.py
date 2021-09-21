@@ -20,7 +20,7 @@ class RNNEvaluator(Evaluator):
         self.simulation_time: float = simulation_time
         self.environment: Environment = environment
 
-    def evaluate(self, individual: Individual) -> int:
+    def evaluate(self, individual: Individual) -> float:
         gene: RNNGene = individual.gene
 
         network: RNN = RNN(input_weights=gene.input_weights, recurrent_weights=gene.recurrent_weights)

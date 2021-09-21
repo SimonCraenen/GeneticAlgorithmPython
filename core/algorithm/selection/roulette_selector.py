@@ -12,4 +12,4 @@ class RouletteSelector(Selector):
         super().__init__()
 
     def select_individual(self, population: List[Individual]) -> Individual:
-        return rand_choices(population=population, weights=[individual.fitness for individual in population])
+        return rand_choices(population=population, weights=[individual.fitness for individual in population])[0]

@@ -26,7 +26,6 @@ class Selector:
 
         selection: List[Tuple[Individual, Individual]] = []
 
-
         for i in range(selection_amount):
             winner_one = self.select_individual(population)
             winner_two = self.select_individual(population)

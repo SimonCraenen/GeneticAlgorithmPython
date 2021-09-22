@@ -1,12 +1,11 @@
 from .selector import Selector
 
-from random import choices as rand_choices
+from random import choices, choice, sample
 
 from ...models import Individual
 
-from typing import List, Tuple, Dict
+from typing import List
 
-from random import uniform
 
 
 class RouletteSelector(Selector):

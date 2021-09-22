@@ -1,10 +1,10 @@
 from .selector import Selector
 
-from random import choices as rand_choices
+from random import choices, choice, sample
 
 from ...models import Individual
 
-from typing import List, Tuple
+from typing import List
 
 
 class TournamentSelector(Selector):

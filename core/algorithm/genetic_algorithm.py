@@ -51,8 +51,9 @@ class GeneticAlgorithm:
             best_individual = self.__iterate()
 
             generation_end_time = time()
-            
-            pickle_dump(best_individual, open(path_join(self.output_dir, "best-individual-generation-{}.p".format(self.generation)), "wb"))
+
+            self.save_individual(best_individual)            
+            self.save_state()
 
             print("generation {}, {}ms".format(self.generation, round(generation_end_time - generation_start_time, 3) * 1000), best_individual.gene, best_individual.fitness)
 
@@ -95,13 +96,14 @@ class GeneticAlgorithm:
 
         return new_population
 
-    def save_state(self, path: str):
-        """Save a Genetic Algorithm state to file
+    def save_individual(self, individual: Individual):
+        """Save a Genetic Algorithm best individual to file"""
+        pickle_dump(individual, open(path_join(self.output_dir, "best-individual-generation-{}.p".format(self.generation)), "wb"))
 
-        Arguments:
-        path -- path to the state file (pkl)
-        """
-        pickle_dump(self, open(path_join(self.output_dir, "population-generation-{}".format(self.generation)), "wb"))
+
+    def save_state(self):
+        """Save a Genetic Algorithm population to file"""
+        pickle_dump(self.population, open(path_join(self.output_dir, "population-generation-{}".format(self.generation)), "wb"))
 
 
     @staticmethod
@@ -111,4 +113,4 @@ class GeneticAlgorithm:
         Arguments:
         path -- path to the state file (pkl)
         """
-        return pickle_load(open(path), "rb")
+        return pickle_load(open(path, "rb"))

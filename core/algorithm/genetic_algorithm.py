@@ -17,12 +17,12 @@ from os.path import join as path_join
 from os.path import exists as path_exists
 from os import makedirs as make_paths
 
-output_dir = "results/"
-if not path_exists(output_dir):
-    make_paths(output_dir)
-
 class GeneticAlgorithm:
     def __init__(self, gene_type: Type[Gene], evaluator: Evaluator, selector: Selector, population_size: int, mutation_probability: float, elitism_percentage: float=.05, population: List[Individual] = None, generation: int = 1, process_pool = None, **kwargs):
+        self.output_dir = kwargs.get('output_dir', 'results/')
+        if not path_exists(self.output_dir):
+            make_paths(self.output_dir)
+        
         self.process_pool = process_pool
 
         self.gene_type: Type[Gene] = gene_type
@@ -52,7 +52,7 @@ class GeneticAlgorithm:
 
             generation_end_time = time()
             
-            pickle_dump(best_individual, open(path_join(output_dir, "best-generation-{}.p".format(self.generation)), "wb"))
+            pickle_dump(best_individual, open(path_join(self.output_dir, "best-individual-generation-{}.p".format(self.generation)), "wb"))
 
             print("generation {}, {}ms".format(self.generation, round(generation_end_time - generation_start_time, 3) * 1000), best_individual.gene, best_individual.fitness)
 
@@ -101,7 +101,7 @@ class GeneticAlgorithm:
         Arguments:
         path -- path to the state file (pkl)
         """
-        pickle_dump(self, open(path_join(output_dir, "population-generation-{}".format(self.generation)), "wb"))
+        pickle_dump(self, open(path_join(self.output_dir, "population-generation-{}".format(self.generation)), "wb"))
 
 
     @staticmethod

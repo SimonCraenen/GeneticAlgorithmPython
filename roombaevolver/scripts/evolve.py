@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     start = time()
 
-    ga = GeneticAlgorithm(RNNGene, RNNEvaluator(KAMI_V2, (6.5, .75, pi / 2),simulation_time=60), TournamentSelector(20), population_size=250, mutation_probability=.02, process_pool=process_pool, inputs=12, outputs=2)
+    ga = GeneticAlgorithm(RNNGene, RNNEvaluator(KAMI_V2, (6.5, .75, pi / 2), simulation_time=60), TournamentSelector(20), population_size=250, mutation_probability=.02, process_pool=process_pool, inputs=12, outputs=2)
     ga.start()
 
     print("{} seconds have passed.".format(round(time() - start, 2)))

@@ -34,14 +34,10 @@ class Container(App):
         return self.simulator
 
 if __name__ == "__main__":
-    # individual = pickle_load(open("results/first_run/st60ps250mp02.p", "rb"))
-    individual = pickle_load(open("results/results_with_bias/best-generation-87.p", "rb"))
+    individual = pickle_load(open('results/roombaevolver/best-individual-generation-{generation}.p'.format(generation=1), 'rb'))
 
     gene: RNNGene = individual.gene
 
-    # update the old saved genes to include weights for the bias node
-    # gene.input_weights = append(gene.input_weights, [[0 for _ in range(gene.input_weights.shape[1])]], axis=0)
-    
     network: RNN = RNN(input_weights=gene.input_weights, recurrent_weights=gene.recurrent_weights)
 
     vehicle: Vehicle = Vehicle(radius=0.17, sensor_amount=12, sensor_range=1.5, speed=1, network=network)

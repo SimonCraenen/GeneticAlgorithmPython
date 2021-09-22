@@ -34,7 +34,7 @@ class Container(App):
         return self.simulator
 
 if __name__ == "__main__":
-    individual = pickle_load(open('results/roombaevolver/best-individual-generation-{generation}.p'.format(generation=1), 'rb'))
+    individual = pickle_load(open('results/roombaevolver/best-individual-generation-{generation}.p'.format(generation=49), 'rb'))
 
     gene: RNNGene = individual.gene
 

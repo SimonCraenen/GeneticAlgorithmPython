@@ -1,6 +1,6 @@
 from .selector import Selector
 
-from random import choices as rand_choices
+from random import choice
 
 from ...models import Individual
 
@@ -12,4 +12,4 @@ class RouletteSelector(Selector):
         super().__init__()
 
     def select_individual(self, population: List[Individual]) -> Individual:
-        return rand_choices(population=population, weights=[individual.fitness for individual in population])[0]
+        return choice(population=population, weights=[individual.fitness for individual in population])

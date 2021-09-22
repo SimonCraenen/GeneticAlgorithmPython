@@ -1,8 +1,8 @@
 from .selector import Selector
 
-from random import choices as rand_choices
-
 from ...models import Individual
+
+from random import sample
 
 from typing import List
 
@@ -14,6 +14,6 @@ class TournamentSelector(Selector):
         self.tournament_size: int = tournament_size
         
     def select_individual(self, population: List[Individual]) -> Individual:
-        tournament = rand_choices(population=population, k=self.tournament_size)
+        tournament = sample(population=population, k=self.tournament_size)
         return max(tournament, key=lambda individual: individual.fitness)
         

@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     start = time()
     
-    ga = GeneticAlgorithm(StringGene, StringEvaluator(target=target), RouletteSelector(), population_size=10, mutation_probability=.005, process_pool=process_pool, gene_length=len(target))
+    ga = GeneticAlgorithm(StringGene, StringEvaluator(target=target), RouletteSelector(), population_size=10, mutation_probability=.005, process_pool=process_pool, gene_length=len(target), output_dir='results/stringevolver/')
     ga.start()
 
     print("{} seconds have passed.".format(round(time() - start, 2)))

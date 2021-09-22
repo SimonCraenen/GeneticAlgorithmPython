@@ -4,14 +4,11 @@ from core.models import Gene
 
 from typing import Tuple
 
-from numpy.random import randint
-from numpy import where
+from numpy.random import randint, uniform
 from random import choices as rand_choices
 
-from abc import abstractmethod, abstractstaticmethod
 
-
-alphabet = "abcdefghijklmnopqrstuvwxyz -"
+alphabet = 'abcdefghijklmnopqrstuvwxyz -'
 
 class StringGene(Gene):
     def __init__(self, string: str):
@@ -35,14 +32,14 @@ class StringGene(Gene):
         return (child_one, child_two)
 
     def __repr__(self):
-        return "[Gene - {string}]".format(string=self.string)
+        return '[Gene - {string}]'.format(string=self.string)
 
     @staticmethod
     def initialise(**kwargs) -> StringGene:
-        length = kwargs.get("gene_length", 0)
+        length = kwargs.get('gene_length', 0)
 
-        if length == 0:
-            pass # TODO raise exception
+        if length <= 0:
+            raise ValueError('gene_length <= 0, no kinder-bueno')
 
         indices = randint(len(alphabet), size=length)
-        return StringGene(string="".join(map(lambda index: alphabet[index], indices)))
+        return StringGene(string=''.join(map(lambda index: alphabet[index], indices)))
